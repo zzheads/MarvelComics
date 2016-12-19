@@ -110,6 +110,7 @@
 				TargetAttributes = {
 					A6DEDE9D1E085037006B0F5D = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = RS93W547X8;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -270,7 +271,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RS93W547X8;
 				INFOPLIST_FILE = MarvelComics/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzheads.MarvelComics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -281,7 +284,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RS93W547X8;
 				INFOPLIST_FILE = MarvelComics/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzheads.MarvelComics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
