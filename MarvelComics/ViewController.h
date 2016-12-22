@@ -11,5 +11,12 @@
 
 @interface ViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
+@property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, strong) NSArray *characters;
+@property (nonatomic, strong) APIClient *apiClient;
+@property (nonatomic, strong) UIPickerView *picker;
+@property (nonatomic, strong) UIImageView *image;
+@property (nonatomic, strong) UIProgressView *progress;
+
 @end
 

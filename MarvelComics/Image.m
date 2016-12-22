@@ -20,4 +20,9 @@
     return self;
 }
 
+-(NSString *) securedFileName {
+    NSString *secured = [self.path stringByReplacingOccurrencesOfString:@"http" withString:@"https"];
+    return [[NSString alloc] initWithFormat:@"%@.%@", secured, self.extension];
+}
+
 @end

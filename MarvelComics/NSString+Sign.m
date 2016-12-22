@@ -20,7 +20,7 @@
     // Sign example: http://gateway.marvel.com/v1/comics?ts=1&apikey=1234&hash=ffd275c5130566a2916217b101f26150
     NSString *sumOfAllKeys = [NSString stringWithFormat:@"%@%@%@", timeStampString, API_SECRET_KEY, API_PUBLIC_KEY];
     NSString *hash = [sumOfAllKeys MD5String];
-    NSString *sign = [NSString stringWithFormat:@"?ts=%@&apikey=%@&hash=%@", timeStampString, API_PUBLIC_KEY, hash];
+    NSString *sign = [NSString stringWithFormat:@"&ts=%@&apikey=%@&hash=%@", timeStampString, API_PUBLIC_KEY, hash];
     return [NSString stringWithFormat:@"%@%@", self, sign];
 }
 

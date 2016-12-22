@@ -10,14 +10,9 @@
 #import "APIClient.h"
 #import "ResponseDict.h"
 #import "Character.h"
+#import "AFNetworking/UIImageView+AFNetworking.h"
 
 @interface ViewController ()
-
-@property (nonatomic, strong) NSDictionary *dict;
-@property (nonatomic, strong) NSArray *characters;
-@property (nonatomic, strong) APIClient *apiClient;
-@property (nonatomic, strong) UIPickerView *picker;
-@property (nonatomic, weak) UIImage *image;
 
 @end
 
@@ -26,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.apiClient = [[APIClient alloc] init];
+    
     self.picker = [[UIPickerView alloc] init];
     self.picker.translatesAutoresizingMaskIntoConstraints = false;
     self.picker.backgroundColor = [UIColor clearColor];
@@ -33,24 +29,52 @@
     self.picker.dataSource = self;
     self.picker.delegate = self;
     
-    self.image = [[UIImage alloc] init];
+    self.image = [[UIImageView alloc] init];
+    self.image.translatesAutoresizingMaskIntoConstraints = false;
+    
+    self.progress = [[UIProgressView alloc] init];
+    self.progress.translatesAutoresizingMaskIntoConstraints = false;
+    self.progress.progressTintColor = [UIColor greenColor];
     
     float height = [UIScreen mainScreen].bounds.size.height;
+    float width = [UIScreen mainScreen].bounds.size.width;
     
     [self.view addSubview:self.picker];
     [NSLayoutConstraint activateConstraints:@[
-     [self.picker.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
-     [self.picker.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
-     [self.picker.topAnchor constraintEqualToAnchor:self.view.topAnchor constant: height/2],
-     [self.picker.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+                                              [self.picker.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
+                                              [self.picker.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
+                                              [self.picker.topAnchor constraintEqualToAnchor:self.view.topAnchor constant: height/2],
+                                              [self.picker.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
      ]];
     
-    [self.apiClient fetchResource:^(NSDictionary *responseDict) {
-        NSLog(@"%@", responseDict);
-        ResponseDict *response = [[ResponseDict alloc] initWithJson:responseDict];
+    [self.view addSubview:self.image];
+    [NSLayoutConstraint activateConstraints:@[
+                                              [self.image.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
+                                              [self.image.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
+                                              [self.image.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+                                              [self.image.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant: -height/2]
+                                              ]];
+
+    [self.view addSubview:self.progress];
+    [NSLayoutConstraint activateConstraints:@[
+                                              [self.progress.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:width/10],
+                                              [self.progress.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-width/10],
+                                              [self.progress.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor]
+                                              ]];
+
+    
+    ParseFromJson parserToCharacter = ^id(NSDictionary *json) {
+        return [[Character alloc] initWithJson:json];
+    };
+    ProgressDelegate setProgress = ^void(float progress) {
+        [self.progress setProgress:progress animated:true];
+    };
+    
+    [self.apiClient fetchPages:Characters :parserToCharacter :setProgress :^(NSArray *characters) {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            self.characters = [Character getCharacters:response.data.results];
+            self.characters = characters;
             [self.picker reloadAllComponents];
+            [self.picker selectRow:0 inComponent:0 animated:true];
         });
     }];
 }
@@ -78,6 +102,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     Character *character = [self.characters objectAtIndex:row];
     NSLog(@"Selected %@", character.name);
+    [self.image setImageWithURL:[NSURL URLWithString:character.thumbnail.securedFileName] placeholderImage:[UIImage imageNamed:character.description]];
 }
 
 

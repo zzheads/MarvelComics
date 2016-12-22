@@ -17,5 +17,6 @@
 @property (nonatomic, strong) NSString *extension;
 
 -(id) initWithJson: (NSDictionary *) json;
+-(NSString *) securedFileName;
 
 @end

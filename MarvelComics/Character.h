@@ -37,6 +37,7 @@
 @property (nonatomic, strong) List *events;
 @property (nonatomic, strong) List *series;
 
+-(id) initWithJson: (NSDictionary *) json;
 +(NSArray *) getCharacters: (NSArray *) jsonArray;
 
 @end
