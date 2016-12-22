@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.characters = [[NSMutableArray alloc] init];
     self.apiClient = [[APIClient alloc] init];
     
     self.picker = [[UIPickerView alloc] init];
@@ -69,14 +70,12 @@
     ProgressDelegate setProgress = ^void(float progress) {
         [self.progress setProgress:progress animated:true];
     };
+    PartialCompletionHandler partialCompletion = ^void(NSArray *characters) {
+        [self.characters addObjectsFromArray:characters];
+        [self.picker reloadAllComponents];
+    };
     
-    [self.apiClient fetchPages:Characters :parserToCharacter :setProgress :^(NSArray *characters) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            self.characters = characters;
-            [self.picker reloadAllComponents];
-            [self.picker selectRow:0 inComponent:0 animated:true];
-        });
-    }];
+    [self.apiClient fetchPages:Characters :parserToCharacter :setProgress :partialCompletion];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -53,9 +53,8 @@
     [task resume];
 }
 
--(void) listPage:(ResourceType)resourceType :(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(CompletionPagesHandler)completionHandler {
+-(void) listPage:(ResourceType)resourceType :(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion {
         if (self.offset + self.limit > self.total) {
-            completionHandler(results);
             return;
         } else {
             NSLog(@"Fetching page. Offset: %li Count: %lu", self.offset, (unsigned long)results.count);
@@ -67,26 +66,29 @@
                 ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseDictionary];
                 self.total = responseDict.data.total;
                 self.offset += self.limit;
+                NSMutableArray *part = [[NSMutableArray alloc] init];
                 for (NSDictionary *jsonElement in responseDict.data.results) {
-                    [results addObject:parser(jsonElement)];
+                    [part addObject:parser(jsonElement)];
                 }
+                [results addObjectsFromArray:part];
                 float progress = (float) results.count / (float) self.total;
                 dispatch_sync(dispatch_get_main_queue(), ^{
+                    partialCompletion(part);
                     setProgress(progress);
                 });
-                [self listPage:resourceType :results :parser :setProgress :completionHandler];
+                [self listPage:resourceType :results :parser :setProgress :partialCompletion];
             }];
             [task resume];
         }
 }
 
--(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(CompletionPagesHandler)completionHandler {
+-(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion {
     self.offset = 0;
     self.limit = 100;
     self.total = 10000;
     NSMutableArray *results = [[NSMutableArray alloc] init];
 
-    [self listPage:resourceType :results :parser :setProgress :completionHandler];
+    [self listPage:resourceType :results :parser :setProgress :partialCompletion];
 }
 
 @end
