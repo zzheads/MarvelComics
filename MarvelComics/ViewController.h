@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APIClient.h"
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 @end
 
