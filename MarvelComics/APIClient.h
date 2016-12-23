@@ -16,6 +16,7 @@ typedef void (^ CompletionPagesHandler)(NSArray *);
 typedef id (^ ParseFromJson)(NSDictionary *);
 typedef void (^ ProgressDelegate)(float);
 typedef void (^ PartialCompletionHandler)(NSArray *);
+typedef void (^ FinalPartialCompletionHandler)(NSArray *);
 
 @interface APIClient : NSObject
 
@@ -29,6 +30,6 @@ typedef void (^ PartialCompletionHandler)(NSArray *);
 @property (nonatomic) long total;
 
 -(void) fetchResource:(ResourceType) resourceType :(CompletionHandler) completionHandler;
--(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion;
+-(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion;
 
 @end

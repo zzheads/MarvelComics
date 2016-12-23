@@ -53,8 +53,11 @@
     [task resume];
 }
 
--(void) listPage:(ResourceType)resourceType :(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion {
-        if (self.offset + self.limit > self.total) {
+-(void) listPage:(ResourceType)resourceType :(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
+        if (results.count == self.total) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                finalCompletion(results);
+            });
             return;
         } else {
             NSLog(@"Fetching page. Offset: %li Count: %lu", self.offset, (unsigned long)results.count);
@@ -76,19 +79,19 @@
                     partialCompletion(part);
                     setProgress(progress);
                 });
-                [self listPage:resourceType :results :parser :setProgress :partialCompletion];
+                [self listPage:resourceType :results :parser :setProgress :partialCompletion :finalCompletion];
             }];
             [task resume];
         }
 }
 
--(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion {
+-(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
     self.offset = 0;
     self.limit = 100;
     self.total = 10000;
     NSMutableArray *results = [[NSMutableArray alloc] init];
 
-    [self listPage:resourceType :results :parser :setProgress :partialCompletion];
+    [self listPage:resourceType :results :parser :setProgress :partialCompletion :finalCompletion];
 }
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "CharacterViewController.h"
+#import "UIColor+AppColor.h"
 
 @interface AppDelegate ()
 
@@ -16,8 +18,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    return YES;
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    if (self.window == nil) {
+        return false;
+    }
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [UINavigationBar appearance].barTintColor = [UIColor dark];
+    
+    CharacterViewController *viewController = [[CharacterViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+    
+    return true;
 }
 
 

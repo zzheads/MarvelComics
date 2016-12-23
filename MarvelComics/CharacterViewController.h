@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "APIClient.h"
 
-@interface ViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@interface CharacterViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) NSDictionary *dict;
 @property (nonatomic, strong) NSMutableArray *characters;
@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIPickerView *picker;
 @property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, strong) UIProgressView *progress;
+@property (nonatomic, strong) UILabel *descriptionLabel;
 
 @end
 
