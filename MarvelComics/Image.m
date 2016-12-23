@@ -25,4 +25,8 @@
     return [[NSString alloc] initWithFormat:@"%@.%@", secured, self.extension];
 }
 
++(NSArray *)getImages:(NSArray *)jsonArray {
+    
+}
+
 @end

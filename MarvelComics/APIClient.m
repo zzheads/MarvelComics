@@ -17,23 +17,12 @@
     return self;
 }
 
--(NSURL *) url {
+-(NSURL *) url:(long)offset :(long)limit {
     NSString *urlString;
     NSString *fullUrl;
     switch (self.resourceType) {
         case Characters: urlString = @"/v1/public/characters";
-    }
-    fullUrl = [NSString stringWithFormat:@"%@%@", self.baseUrl, urlString];
-    fullUrl = [fullUrl sign];
-    NSURL *url = [[NSURL alloc] initWithString:fullUrl];
-    return url;
-}
-
--(NSURL *) urlWithLimits:(long) offset :(long) limit {
-    NSString *urlString;
-    NSString *fullUrl;
-    switch (self.resourceType) {
-        case Characters: urlString = @"/v1/public/characters";
+        case Comics: urlString = @"/v1/public/comics";
     }
     fullUrl = [NSString stringWithFormat:@"%@%@?limit=%li&offset=%li", self.baseUrl, urlString, limit, offset];
     fullUrl = [fullUrl sign];
@@ -42,7 +31,7 @@
 }
 
 -(void) fetchResource:(ResourceType) resourceType :(CompletionHandler) completionHandler {
-    NSURL *url = [self url];
+    NSURL *url = [self url:0 :1];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
     NSURLSessionDownloadTask *task = [self.session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSData *data = [[NSData alloc] initWithContentsOfURL:location];
@@ -61,7 +50,7 @@
             return;
         } else {
             NSLog(@"Fetching page. Offset: %li Count: %lu", self.offset, (unsigned long)results.count);
-            NSURL *url = [self urlWithLimits:self.offset :self.limit];
+            NSURL *url = [self url:self.offset :self.limit];
             NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
             NSURLSessionDownloadTask *task = [self.session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 NSData *data = [[NSData alloc] initWithContentsOfURL:location];

@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 typedef enum ResourceType {
-    Characters
+    Characters,
+    Comics
 } ResourceType;

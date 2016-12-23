@@ -18,6 +18,9 @@
 		A627234B1E0C0991009BBFAB /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A627234A1E0C0991009BBFAB /* AFNetworking.framework */; };
 		A627234D1E0C0DFB009BBFAB /* AFNetworking.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A627234A1E0C0991009BBFAB /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A65A67771E0D0EA000BA91F2 /* UIColor+AppColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67761E0D0EA000BA91F2 /* UIColor+AppColor.m */; };
+		A65A677B1E0D491300BA91F2 /* ComicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A677A1E0D491300BA91F2 /* ComicsViewController.m */; };
+		A65A67821E0D4D4000BA91F2 /* Comic.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67811E0D4D4000BA91F2 /* Comic.m */; };
+		A65A67861E0D52D400BA91F2 /* NSArray+ArrayFromJson.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67851E0D52D400BA91F2 /* NSArray+ArrayFromJson.m */; };
 		A6DEDEA31E085037006B0F5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA21E085037006B0F5D /* main.m */; };
 		A6DEDEA61E085037006B0F5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA51E085037006B0F5D /* AppDelegate.m */; };
 		A6DEDEA91E085037006B0F5D /* CharacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA81E085037006B0F5D /* CharacterViewController.m */; };
@@ -60,6 +63,12 @@
 		A627234A1E0C0991009BBFAB /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		A65A67751E0D0EA000BA91F2 /* UIColor+AppColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppColor.h"; sourceTree = "<group>"; };
 		A65A67761E0D0EA000BA91F2 /* UIColor+AppColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppColor.m"; sourceTree = "<group>"; };
+		A65A67791E0D491300BA91F2 /* ComicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicsViewController.h; sourceTree = "<group>"; };
+		A65A677A1E0D491300BA91F2 /* ComicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicsViewController.m; sourceTree = "<group>"; };
+		A65A67801E0D4D4000BA91F2 /* Comic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comic.h; sourceTree = "<group>"; };
+		A65A67811E0D4D4000BA91F2 /* Comic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comic.m; sourceTree = "<group>"; };
+		A65A67841E0D52D400BA91F2 /* NSArray+ArrayFromJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ArrayFromJson.h"; sourceTree = "<group>"; };
+		A65A67851E0D52D400BA91F2 /* NSArray+ArrayFromJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ArrayFromJson.m"; sourceTree = "<group>"; };
 		A6DEDE9E1E085037006B0F5D /* MarvelComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DEDEA21E085037006B0F5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6DEDEA41E085037006B0F5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -88,11 +97,12 @@
 		A627230B1E0BB132009BBFAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A62723101E0BB2DA009BBFAB /* Character */,
+				A65A677C1E0D4CC700BA91F2 /* Comic */,
+				A627232D1E0BB6EC009BBFAB /* API */,
 				A62723421E0BE7E8009BBFAB /* List */,
 				A627233B1E0BDD0F009BBFAB /* ResponseDict */,
-				A627232D1E0BB6EC009BBFAB /* API */,
 				A62723371E0BD006009BBFAB /* Image */,
-				A62723101E0BB2DA009BBFAB /* Character */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -100,6 +110,7 @@
 		A627230C1E0BB13A009BBFAB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A65A67831E0D52A200BA91F2 /* JsonArray */,
 				A62723501E0D0223009BBFAB /* Colors */,
 				A657173F1E09408300280C99 /* Signature */,
 			);
@@ -189,8 +200,28 @@
 			children = (
 				A6DEDEA71E085037006B0F5D /* CharacterViewController.h */,
 				A6DEDEA81E085037006B0F5D /* CharacterViewController.m */,
+				A65A67791E0D491300BA91F2 /* ComicsViewController.h */,
+				A65A677A1E0D491300BA91F2 /* ComicsViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A65A677C1E0D4CC700BA91F2 /* Comic */ = {
+			isa = PBXGroup;
+			children = (
+				A65A67801E0D4D4000BA91F2 /* Comic.h */,
+				A65A67811E0D4D4000BA91F2 /* Comic.m */,
+			);
+			name = Comic;
+			sourceTree = "<group>";
+		};
+		A65A67831E0D52A200BA91F2 /* JsonArray */ = {
+			isa = PBXGroup;
+			children = (
+				A65A67841E0D52D400BA91F2 /* NSArray+ArrayFromJson.h */,
+				A65A67851E0D52D400BA91F2 /* NSArray+ArrayFromJson.m */,
+			);
+			name = JsonArray;
 			sourceTree = "<group>";
 		};
 		A6DEDE951E085037006B0F5D = {
@@ -306,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A65A677B1E0D491300BA91F2 /* ComicsViewController.m in Sources */,
 				A6DEDEA91E085037006B0F5D /* CharacterViewController.m in Sources */,
 				A62723481E0BE8CF009BBFAB /* List.m in Sources */,
 				A627233A1E0BD019009BBFAB /* Image.m in Sources */,
@@ -314,6 +346,8 @@
 				A62723301E0BB701009BBFAB /* APIClient.m in Sources */,
 				A627233E1E0BDD2A009BBFAB /* ResponseDict.m in Sources */,
 				A65A67771E0D0EA000BA91F2 /* UIColor+AppColor.m in Sources */,
+				A65A67821E0D4D4000BA91F2 /* Comic.m in Sources */,
+				A65A67861E0D52D400BA91F2 /* NSArray+ArrayFromJson.m in Sources */,
 				A6DEDEA31E085037006B0F5D /* main.m in Sources */,
 				A62723451E0BE803009BBFAB /* Summary.m in Sources */,
 				A627230F1E0BB164009BBFAB /* Character.m in Sources */,
