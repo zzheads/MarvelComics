@@ -7,11 +7,6 @@
 //
 
 #import "CharacterViewController.h"
-#import "APIClient.h"
-#import "UIColor+AppColor.h"
-#import "ResponseDict.h"
-#import "Character.h"
-#import "AFNetworking/UIImageView+AFNetworking.h"
 
 @interface CharacterViewController ()
 
@@ -22,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.characters = [[NSMutableArray alloc] init];
+    self.comicsItems = [[NSArray alloc] init];
     self.apiClient = [[APIClient alloc] init];
     
     self.picker = [[UIPickerView alloc] init];
@@ -44,7 +40,7 @@
     self.descriptionLabel.numberOfLines = 0;
     self.descriptionLabel.textAlignment = NSTextAlignmentJustified;
     self.descriptionLabel.font = [UIFont systemFontOfSize:13];
-    
+        
     float height = [UIScreen mainScreen].bounds.size.height;
     float width = [UIScreen mainScreen].bounds.size.width;
     
@@ -53,7 +49,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:8 green:114 blue:160 alpha:1.0];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];    
     
-    [self.view setBackgroundColor:[UIColor neutral]];
+    [self.view setBackgroundColor:[UIColor dark]];
     [self.view addSubview:self.picker];
     [NSLayoutConstraint activateConstraints:@[
                                               [self.picker.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
@@ -64,9 +60,10 @@
     
     [self.view addSubview:self.image];
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.image.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                                              [self.image.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
+                                              [self.image.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
                                               [self.image.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor],
-                                              [self.image.heightAnchor constraintEqualToConstant:height/2]
+                                              //[self.image.heightAnchor constraintEqualToConstant:height/2]
                                               ]];
 
     [self.view addSubview:self.progress];
@@ -83,6 +80,7 @@
                                               [self.descriptionLabel.topAnchor constraintEqualToAnchor:self.image.bottomAnchor constant:height/30],
                                               [self.descriptionLabel.bottomAnchor constraintEqualToAnchor:self.picker.topAnchor constant:-height/30]
                                               ]];
+    
     
     ParseFromJson parserToCharacter = ^id(NSDictionary *json) {
         return [[Character alloc] initWithJson:json];
@@ -109,11 +107,18 @@
 // UIPickerView - DataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return self.characters.count;
+    switch (component) {
+        case 0:
+            return self.characters.count;
+        case 1:
+            return self.comicsItems.count;
+        default:
+            return 0;
+    }
 }
 
 // UIPickerView - Delegate
@@ -121,21 +126,41 @@
     if (view != nil) {
         return view;
     }
-    Character *character = [self.characters objectAtIndex:row];
     UILabel *label = [[UILabel alloc] init];
-    label.text = character.name;
     label.textColor = [UIColor lighten];
     label.font = [UIFont boldSystemFontOfSize:14.0];
     label.textAlignment = NSTextAlignmentCenter;
+    switch (component) {
+        case 0:
+            label.text = ((Character *)self.characters[row]).name;
+            break;
+        case 1:
+            label.text = ((Summary *)self.comicsItems[row]).name;
+            break;
+        default:
+            return nil;
+    }
     return label;
 }
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    Character *character = [self.characters objectAtIndex:row];
-    self.navigationItem.title = character.name;
-    self.descriptionLabel.text = character.desc;
-    [self.image setImageWithURL:[NSURL URLWithString:character.thumbnail.securedFileName] placeholderImage:[UIImage imageNamed:character.description]];
+    switch (component) {
+        case 0:
+            self.currentCharacter = self.characters[row];
+            if (self.currentCharacter.comics != nil) {
+                self.comicsItems = self.currentCharacter.comics.items;
+            }
+            self.navigationItem.title = self.currentCharacter.name;
+            self.descriptionLabel.text = self.currentCharacter.desc;
+            [self.image setImageWithURL:[NSURL URLWithString:self.currentCharacter.thumbnail.securedFileName] placeholderImage:[UIImage imageNamed:self.currentCharacter.desc]];
+            [self.picker reloadComponent:1];
+            break;
+        case 1:
+            NSLog(@"Comics name: %@", ((Summary *)self.comicsItems[row]).name);
+            NSLog(@"Comics uri: %@", ((Summary *)self.comicsItems[row]).resourceURI);
+            break;
+    }
 }
 
 

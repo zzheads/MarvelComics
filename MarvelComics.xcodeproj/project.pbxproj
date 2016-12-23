@@ -184,6 +184,15 @@
 			name = Signature;
 			sourceTree = "<group>";
 		};
+		A65A67781E0D299A00BA91F2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A6DEDEA71E085037006B0F5D /* CharacterViewController.h */,
+				A6DEDEA81E085037006B0F5D /* CharacterViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		A6DEDE951E085037006B0F5D = {
 			isa = PBXGroup;
 			children = (
@@ -204,15 +213,9 @@
 		A6DEDEA01E085037006B0F5D /* MarvelComics */ = {
 			isa = PBXGroup;
 			children = (
+				A65A67781E0D299A00BA91F2 /* Controllers */,
 				A627230C1E0BB13A009BBFAB /* Extensions */,
 				A627230B1E0BB132009BBFAB /* Model */,
-				A6DEDEA41E085037006B0F5D /* AppDelegate.h */,
-				A6DEDEA51E085037006B0F5D /* AppDelegate.m */,
-				A6DEDEA71E085037006B0F5D /* CharacterViewController.h */,
-				A6DEDEA81E085037006B0F5D /* CharacterViewController.m */,
-				A6DEDEAD1E085037006B0F5D /* Assets.xcassets */,
-				A6DEDEAF1E085037006B0F5D /* LaunchScreen.storyboard */,
-				A6DEDEB21E085037006B0F5D /* Info.plist */,
 				A6DEDEA11E085037006B0F5D /* Supporting Files */,
 			);
 			path = MarvelComics;
@@ -221,6 +224,11 @@
 		A6DEDEA11E085037006B0F5D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A6DEDEAD1E085037006B0F5D /* Assets.xcassets */,
+				A6DEDEAF1E085037006B0F5D /* LaunchScreen.storyboard */,
+				A6DEDEB21E085037006B0F5D /* Info.plist */,
+				A6DEDEA41E085037006B0F5D /* AppDelegate.h */,
+				A6DEDEA51E085037006B0F5D /* AppDelegate.m */,
 				A6DEDEA21E085037006B0F5D /* main.m */,
 			);
 			name = "Supporting Files";
