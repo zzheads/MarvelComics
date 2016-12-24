@@ -21,11 +21,15 @@
     NSString *urlString;
     NSString *fullUrl;
     switch (self.resourceType) {
-        case Characters: urlString = @"/v1/public/characters";
-        case Comics: urlString = @"/v1/public/comics";
+        case Characters:
+            urlString = @"/v1/public/characters";
+            break;
+        case Comics:
+            urlString = @"/v1/public/comics";
+            break;
     }
     fullUrl = [NSString stringWithFormat:@"%@%@?limit=%li&offset=%li", self.baseUrl, urlString, limit, offset];
-    fullUrl = [fullUrl sign];
+    fullUrl = [fullUrl signWith:'&'];
     NSURL *url = [[NSURL alloc] initWithString:fullUrl];
     return url;
 }
@@ -42,7 +46,7 @@
     [task resume];
 }
 
--(void) listPage:(ResourceType)resourceType :(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
+-(void) listPage:(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
         if (results.count == self.total) {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 finalCompletion(results);
@@ -52,6 +56,7 @@
             NSLog(@"Fetching page. Offset: %li Count: %lu", self.offset, (unsigned long)results.count);
             NSURL *url = [self url:self.offset :self.limit];
             NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+            NSLog(@"Request: %@", request.description);
             NSURLSessionDownloadTask *task = [self.session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 NSData *data = [[NSData alloc] initWithContentsOfURL:location];
                 NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -68,19 +73,21 @@
                     partialCompletion(part);
                     setProgress(progress);
                 });
-                [self listPage:resourceType :results :parser :setProgress :partialCompletion :finalCompletion];
+                [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
             }];
             [task resume];
         }
 }
 
 -(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
+    [self.session finishTasksAndInvalidate];
+    self.resourceType = resourceType;
     self.offset = 0;
     self.limit = 100;
     self.total = 10000;
     NSMutableArray *results = [[NSMutableArray alloc] init];
 
-    [self listPage:resourceType :results :parser :setProgress :partialCompletion :finalCompletion];
+    [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
 }
 
 @end

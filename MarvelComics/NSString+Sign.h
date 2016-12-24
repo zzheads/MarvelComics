@@ -11,6 +11,6 @@
 
 @interface NSString (Sign)
 
--(NSString *) sign;
+-(NSString *) signWith:(char)appendingChar;
 
 @end

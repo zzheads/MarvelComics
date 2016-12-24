@@ -22,12 +22,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.apiClient = [[APIClient alloc] init];
+    self.comics = [[NSMutableArray alloc] init];
+
+    ProgressDelegate setProgress = ^void(float progress) {
+    };
+    PartialCompletionHandler partialCompletion = ^void(NSArray *comics) {
+        [self.comics addObjectsFromArray:comics];
+    };
+    FinalPartialCompletionHandler finalCompletion = ^void(NSArray *comics) {
+    
+    };
+
+    
+    [self.apiClient fetchPages:Comics :Comic.parser :setProgress :partialCompletion :finalCompletion];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+
+- (void)setProgress:(float)progress {
+}
+     
+     
 /*
 #pragma mark - Navigation
 

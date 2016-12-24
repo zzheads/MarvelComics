@@ -7,6 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ComicDate.h"
+#import "ComicPrice.h"
+#import "TextObject.h"
+#import "Url.h"
 #import "Summary.h"
 #import "List.h"
 #import "Image.h"
@@ -73,5 +77,8 @@
 @property (nonatomic, strong) List *characters;
 @property (nonatomic, strong) List *stories;
 @property (nonatomic, strong) List *events;
+
+- (id) initWithJson:(NSDictionary *)json;
++(ParseFromJson)parser;
 
 @end

@@ -82,22 +82,29 @@
                                               ]];
     
     
+
     ParseFromJson parserToCharacter = ^id(NSDictionary *json) {
         return [[Character alloc] initWithJson:json];
     };
-    ProgressDelegate setProgress = ^void(float progress) {
-        [self.progress setProgress:progress animated:true];
-    };
-    PartialCompletionHandler partialCompletion = ^void(NSArray *characters) {
-        [self.characters addObjectsFromArray:characters];
-        [self.picker reloadAllComponents];
-    };
-    FinalPartialCompletionHandler finalCompletion = ^void(NSArray *characters) {
-        [self.progress setProgress:1.0 animated:true];
-        [self.progress setHidden:true];
-    };
     
-    [self.apiClient fetchPages:Characters :parserToCharacter :setProgress :partialCompletion :finalCompletion];
+    
+    self.manager = [AFHTTPSessionManager manager];
+    for (int i = 0; i < 1500; i += 100) {
+        NSString *urlString = [NSString stringWithFormat:@"https://gateway.marvel.com/v1/public/characters?offset=%i&limit=100", i];
+        urlString = [urlString signWith:'&'];
+        NSLog(@"URL string: %@\n", urlString);
+        NSURL *URL = [NSURL URLWithString: urlString];
+        
+        [self.manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+            ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
+            NSArray *arrayOfCharacters = [NSArray arrayFromJson:responseDict.data.results :parserToCharacter];
+            [self.characters addObjectsFromArray:arrayOfCharacters];
+            [self.picker reloadAllComponents];
+            [self.progress setProgress:(float)self.characters.count/1500.0 animated:true];
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,12 +160,21 @@
             }
             self.navigationItem.title = self.currentCharacter.name;
             self.descriptionLabel.text = self.currentCharacter.desc;
-            [self.image setImageWithURL:[NSURL URLWithString:self.currentCharacter.thumbnail.securedFileName] placeholderImage:[UIImage imageNamed:self.currentCharacter.desc]];
+            [self.image setImageWithURL:[NSURL URLWithString:self.currentCharacter.thumbnail.securedFileName] placeholderImage:[UIImage imageNamed:self.currentCharacter.name]];
             [self.picker reloadComponent:1];
             break;
         case 1:
             NSLog(@"Comics name: %@", ((Summary *)self.comicsItems[row]).name);
             NSLog(@"Comics uri: %@", ((Summary *)self.comicsItems[row]).resourceURI);
+            
+            NSArray *tasks = [self.manager tasks];
+            for (NSURLSessionDownloadTask *task in tasks) {
+                NSLog(@"Task %@ cancelled.", task.description);
+                [task cancel];
+            }
+            NSLog(@"Count of characters: %li", self.characters.count);
+            //ComicsViewController *comicsViewController = [[ComicsViewController alloc] initWithComicsURL:((Summary *)self.comicsItems[row]).resourceURI];
+            //[self.navigationController pushViewController:comicsViewController animated:true];
             break;
     }
 }

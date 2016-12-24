@@ -21,6 +21,10 @@
 		A65A677B1E0D491300BA91F2 /* ComicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A677A1E0D491300BA91F2 /* ComicsViewController.m */; };
 		A65A67821E0D4D4000BA91F2 /* Comic.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67811E0D4D4000BA91F2 /* Comic.m */; };
 		A65A67861E0D52D400BA91F2 /* NSArray+ArrayFromJson.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67851E0D52D400BA91F2 /* NSArray+ArrayFromJson.m */; };
+		A65A678A1E0D650700BA91F2 /* TextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67891E0D650700BA91F2 /* TextObject.m */; };
+		A65A678E1E0D65C900BA91F2 /* Url.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A678D1E0D65C900BA91F2 /* Url.m */; };
+		A65A67921E0D666900BA91F2 /* ComicDate.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67911E0D666900BA91F2 /* ComicDate.m */; };
+		A65A67961E0D66D100BA91F2 /* ComicPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67951E0D66D100BA91F2 /* ComicPrice.m */; };
 		A6DEDEA31E085037006B0F5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA21E085037006B0F5D /* main.m */; };
 		A6DEDEA61E085037006B0F5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA51E085037006B0F5D /* AppDelegate.m */; };
 		A6DEDEA91E085037006B0F5D /* CharacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA81E085037006B0F5D /* CharacterViewController.m */; };
@@ -69,6 +73,14 @@
 		A65A67811E0D4D4000BA91F2 /* Comic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comic.m; sourceTree = "<group>"; };
 		A65A67841E0D52D400BA91F2 /* NSArray+ArrayFromJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ArrayFromJson.h"; sourceTree = "<group>"; };
 		A65A67851E0D52D400BA91F2 /* NSArray+ArrayFromJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ArrayFromJson.m"; sourceTree = "<group>"; };
+		A65A67881E0D650700BA91F2 /* TextObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextObject.h; sourceTree = "<group>"; };
+		A65A67891E0D650700BA91F2 /* TextObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextObject.m; sourceTree = "<group>"; };
+		A65A678C1E0D65C900BA91F2 /* Url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Url.h; sourceTree = "<group>"; };
+		A65A678D1E0D65C900BA91F2 /* Url.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Url.m; sourceTree = "<group>"; };
+		A65A67901E0D666900BA91F2 /* ComicDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicDate.h; sourceTree = "<group>"; };
+		A65A67911E0D666900BA91F2 /* ComicDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicDate.m; sourceTree = "<group>"; };
+		A65A67941E0D66D100BA91F2 /* ComicPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicPrice.h; sourceTree = "<group>"; };
+		A65A67951E0D66D100BA91F2 /* ComicPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicPrice.m; sourceTree = "<group>"; };
 		A6DEDE9E1E085037006B0F5D /* MarvelComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DEDEA21E085037006B0F5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6DEDEA41E085037006B0F5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -97,6 +109,10 @@
 		A627230B1E0BB132009BBFAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A65A67931E0D66C100BA91F2 /* ComicPrice */,
+				A65A678F1E0D665A00BA91F2 /* ComicDate */,
+				A65A678B1E0D65BD00BA91F2 /* Url */,
+				A65A67871E0D64F500BA91F2 /* TextObject */,
 				A62723101E0BB2DA009BBFAB /* Character */,
 				A65A677C1E0D4CC700BA91F2 /* Comic */,
 				A627232D1E0BB6EC009BBFAB /* API */,
@@ -224,6 +240,42 @@
 			name = JsonArray;
 			sourceTree = "<group>";
 		};
+		A65A67871E0D64F500BA91F2 /* TextObject */ = {
+			isa = PBXGroup;
+			children = (
+				A65A67881E0D650700BA91F2 /* TextObject.h */,
+				A65A67891E0D650700BA91F2 /* TextObject.m */,
+			);
+			name = TextObject;
+			sourceTree = "<group>";
+		};
+		A65A678B1E0D65BD00BA91F2 /* Url */ = {
+			isa = PBXGroup;
+			children = (
+				A65A678C1E0D65C900BA91F2 /* Url.h */,
+				A65A678D1E0D65C900BA91F2 /* Url.m */,
+			);
+			name = Url;
+			sourceTree = "<group>";
+		};
+		A65A678F1E0D665A00BA91F2 /* ComicDate */ = {
+			isa = PBXGroup;
+			children = (
+				A65A67901E0D666900BA91F2 /* ComicDate.h */,
+				A65A67911E0D666900BA91F2 /* ComicDate.m */,
+			);
+			name = ComicDate;
+			sourceTree = "<group>";
+		};
+		A65A67931E0D66C100BA91F2 /* ComicPrice */ = {
+			isa = PBXGroup;
+			children = (
+				A65A67941E0D66D100BA91F2 /* ComicPrice.h */,
+				A65A67951E0D66D100BA91F2 /* ComicPrice.m */,
+			);
+			name = ComicPrice;
+			sourceTree = "<group>";
+		};
 		A6DEDE951E085037006B0F5D = {
 			isa = PBXGroup;
 			children = (
@@ -340,7 +392,9 @@
 				A65A677B1E0D491300BA91F2 /* ComicsViewController.m in Sources */,
 				A6DEDEA91E085037006B0F5D /* CharacterViewController.m in Sources */,
 				A62723481E0BE8CF009BBFAB /* List.m in Sources */,
+				A65A678A1E0D650700BA91F2 /* TextObject.m in Sources */,
 				A627233A1E0BD019009BBFAB /* Image.m in Sources */,
+				A65A67961E0D66D100BA91F2 /* ComicPrice.m in Sources */,
 				A6DEDEA61E085037006B0F5D /* AppDelegate.m in Sources */,
 				A6DEDEE31E086A64006B0F5D /* MD5.m in Sources */,
 				A62723301E0BB701009BBFAB /* APIClient.m in Sources */,
@@ -351,7 +405,9 @@
 				A6DEDEA31E085037006B0F5D /* main.m in Sources */,
 				A62723451E0BE803009BBFAB /* Summary.m in Sources */,
 				A627230F1E0BB164009BBFAB /* Character.m in Sources */,
+				A65A678E1E0D65C900BA91F2 /* Url.m in Sources */,
 				A62723361E0BC4D3009BBFAB /* NSString+Sign.m in Sources */,
+				A65A67921E0D666900BA91F2 /* ComicDate.m in Sources */,
 				A62723411E0BDE47009BBFAB /* Data.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

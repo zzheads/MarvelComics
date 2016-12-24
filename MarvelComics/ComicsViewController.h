@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APIClient.h"
+#import "Comic.h"
 
 @interface ComicsViewController : UIViewController
 
 @property (nonatomic, strong) NSString *comicsURL;
+@property (nonatomic, strong) APIClient *apiClient;
+@property (nonatomic, strong) NSMutableArray *comics;
 
 - (id)initWithComicsURL: (NSString *)comicsURL;
 
