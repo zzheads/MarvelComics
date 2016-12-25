@@ -15,12 +15,6 @@
 #import "ComicsViewController.h"
 #import "AFNetworking/UIImageView+AFNetworking.h"
 #import "AFNetworking/AFNetworking.h"
-#import "AFNetworking/AFHTTPSessionManager.h"
-#import "AFNetworking/AFNetworkReachabilityManager.h"
-#import "AFNetworking/AFSecurityPolicy.h"
-#import "AFNetworking/AFURLRequestSerialization.h"
-#import "AFNetworking/AFURLResponseSerialization.h"
-#import "AFNetworking/AFURLSessionManager.h"
 
 @interface CharacterViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -33,7 +27,6 @@
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) Character *currentCharacter;
 @property (nonatomic, strong) NSArray *comicsItems;
-@property (nonatomic, strong) AFHTTPSessionManager *manager;
 
 @end
 

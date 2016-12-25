@@ -10,26 +10,18 @@
 #import "ResponseDict.h"
 #import "ResourceType.h"
 #import "NSString+Sign.h"
-
-typedef void (^ CompletionHandler)(NSDictionary *);
-typedef void (^ CompletionPagesHandler)(NSArray *);
-typedef id (^ ParseFromJson)(NSDictionary *);
-typedef void (^ ProgressDelegate)(float);
-typedef void (^ PartialCompletionHandler)(NSArray *);
-typedef void (^ FinalPartialCompletionHandler)(NSArray *);
+#import "NSArray+ArrayFromJson.h"
+#import "Endpoint.h"
+#import "AFNetworking/AFNetworking.h"
+#import "AFHTTPSessionManager+CancelAllTasks.h"
 
 @interface APIClient : NSObject
 
-@property (nonatomic, strong) NSString *baseUrl;
-@property (nonatomic) ResourceType resourceType;
-@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) Endpoint *endpoint;
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 
-@property (nonatomic) long limit;
-@property (nonatomic) long offset;
-@property (nonatomic) long count;
-@property (nonatomic) long total;
-
--(void) fetchResource:(ResourceType) resourceType :(CompletionHandler) completionHandler;
+- (void) fetchURL:(NSString *)urlString :(ParseFromJson)parse :(CompletionSuccess)completionSuccess :(CompletionError)completionError;
+-(void) fetchResource:(ResourceType)resourceType :(ParseFromJson)parser :(CompletionSuccess)completionSuccess :(CompletionError)completionError;
 -(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion;
 
 @end

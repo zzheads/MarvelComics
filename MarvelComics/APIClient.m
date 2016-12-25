@@ -12,81 +12,61 @@
 @implementation APIClient
 
 -(id) init {
-    self.baseUrl = @"https://gateway.marvel.com";
-    self.session = [NSURLSession sharedSession];
+    self = [super init];
+    self.manager = [AFHTTPSessionManager manager];
     return self;
 }
 
--(NSURL *) url:(long)offset :(long)limit {
-    NSString *urlString;
-    NSString *fullUrl;
-    switch (self.resourceType) {
-        case Characters:
-            urlString = @"/v1/public/characters";
-            break;
-        case Comics:
-            urlString = @"/v1/public/comics";
-            break;
-    }
-    fullUrl = [NSString stringWithFormat:@"%@%@?limit=%li&offset=%li", self.baseUrl, urlString, limit, offset];
-    fullUrl = [fullUrl signWith:'&'];
-    NSURL *url = [[NSURL alloc] initWithString:fullUrl];
-    return url;
+- (void) fetchURL:(NSString *)urlString :(ParseFromJson)parse :(CompletionSuccess)completionSuccess :(CompletionError)completionError {
+    self.endpoint = [[Endpoint alloc] initWithURLString:urlString];
+    NSURL *url = [self.endpoint url];
+    [self.manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
+        NSArray *arrayOfResource = [NSArray arrayFromJson:responseDict.data.results :parse];
+        completionSuccess(arrayOfResource);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        completionError(error);
+    }];
 }
 
--(void) fetchResource:(ResourceType) resourceType :(CompletionHandler) completionHandler {
-    NSURL *url = [self url:0 :1];
-    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
-    NSURLSessionDownloadTask *task = [self.session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSData *data = [[NSData alloc] initWithContentsOfURL:location];
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        completionHandler(responseDictionary);
+-(void) fetchResource:(ResourceType)resourceType :(ParseFromJson)parser :(CompletionSuccess)completionSuccess :(CompletionError)completionError {
+    self.endpoint = [[Endpoint alloc] initWithResourceType:resourceType :0 :0 :0 :0];
+    NSURL *url = [self.endpoint url];
+    [self.manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
+        NSArray *arrayOfResource = [NSArray arrayFromJson:responseDict.data.results :parser];
+        completionSuccess(arrayOfResource);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        completionError(error);
     }];
-
-    [task resume];
 }
 
 -(void) listPage:(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
-        if (results.count == self.total) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                finalCompletion(results);
-            });
+        if (results.count == self.endpoint.total) {
+            finalCompletion(results);
             return;
         } else {
-            NSLog(@"Fetching page. Offset: %li Count: %lu", self.offset, (unsigned long)results.count);
-            NSURL *url = [self url:self.offset :self.limit];
-            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
-            NSLog(@"Request: %@", request.description);
-            NSURLSessionDownloadTask *task = [self.session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                NSData *data = [[NSData alloc] initWithContentsOfURL:location];
-                NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseDictionary];
-                self.total = responseDict.data.total;
-                self.offset += self.limit;
-                NSMutableArray *part = [[NSMutableArray alloc] init];
-                for (NSDictionary *jsonElement in responseDict.data.results) {
-                    [part addObject:parser(jsonElement)];
-                }
-                [results addObjectsFromArray:part];
-                float progress = (float) results.count / (float) self.total;
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    partialCompletion(part);
-                    setProgress(progress);
-                });
+            NSURL *url = [self.endpoint url];
+            NSLog(@"Fetching page (%@). Offset: %li Count: %lu", self.endpoint.resourceName, self.endpoint.offset, (unsigned long)results.count);
+            [self.manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
+                self.endpoint.total = responseDict.data.total;
+                NSArray *arrayOfResource = [NSArray arrayFromJson:responseDict.data.results :parser];
+                [results addObjectsFromArray:arrayOfResource];
+                partialCompletion(arrayOfResource);
+                float progress = (float)results.count / (float)self.endpoint.total;
+                setProgress(progress);
+                self.endpoint.offset += arrayOfResource.count;
                 [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                NSLog(@"Error: %@", error);
             }];
-            [task resume];
         }
 }
 
 -(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
-    [self.session finishTasksAndInvalidate];
-    self.resourceType = resourceType;
-    self.offset = 0;
-    self.limit = 100;
-    self.total = 10000;
+    self.endpoint = [[Endpoint alloc] initWithResourceType:resourceType :0 :100 :10000 :0];
     NSMutableArray *results = [[NSMutableArray alloc] init];
-
     [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
 }
 

@@ -24,4 +24,8 @@
     return [NSString stringWithFormat:@"%@%@", self, sign];
 }
 
+-(NSString *) secureHTTP {
+    return [self stringByReplacingOccurrencesOfString:@"http" withString:@"https"];
+}
+
 @end

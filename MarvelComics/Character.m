@@ -38,13 +38,10 @@
     return self;
 }
 
-+(NSArray *) getCharacters: (NSArray *) jsonArray {
-    NSMutableArray *charsArray = [[NSMutableArray alloc] init];
-    for (NSDictionary *jsonElement in jsonArray) {
-        Character *character = [[Character alloc] initWithJson:jsonElement];
-        [charsArray addObject:character];
-    }
-    return charsArray;
++(ParseFromJson)parser {
+    return ^id(NSDictionary *json) {
+        return [[Character alloc] initWithJson:json];
+    };
 }
 
 @end

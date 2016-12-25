@@ -83,32 +83,42 @@
     
     
 
-    ParseFromJson parserToCharacter = ^id(NSDictionary *json) {
-        return [[Character alloc] initWithJson:json];
+    ProgressDelegate setProgress = ^void(float progress) {
+        [self.progress setProgress:progress animated:true];
     };
-    
-    
-    self.manager = [AFHTTPSessionManager manager];
-    for (int i = 0; i < 1500; i += 100) {
-        NSString *urlString = [NSString stringWithFormat:@"https://gateway.marvel.com/v1/public/characters?offset=%i&limit=100", i];
-        urlString = [urlString signWith:'&'];
-        NSLog(@"URL string: %@\n", urlString);
-        NSURL *URL = [NSURL URLWithString: urlString];
-        
-        [self.manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-            ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
-            NSArray *arrayOfCharacters = [NSArray arrayFromJson:responseDict.data.results :parserToCharacter];
-            [self.characters addObjectsFromArray:arrayOfCharacters];
-            [self.picker reloadAllComponents];
-            [self.progress setProgress:(float)self.characters.count/1500.0 animated:true];
-        } failure:^(NSURLSessionTask *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-    }
+    PartialCompletionHandler partialHandler = ^void(NSArray *chars) {
+        [self.characters addObjectsFromArray:chars];
+        [self.picker reloadAllComponents];
+    };
+    FinalPartialCompletionHandler finalHandler = ^void(NSArray *chars) {
+        [self.progress setHidden:true];
+    };
+
+    [self.apiClient fetchPages:Characters :[Character parser] :setProgress :partialHandler :finalHandler];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"I'm back!");
+    [self.apiClient.manager resumeAllTasks];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.apiClient.manager suspendAllTasks];
+    
+    if ([self isMovingFromParentViewController])
+    {
+        NSLog(@"View controller was popped");
+    }
+    else
+    {
+        NSLog(@"New view controller was pushed");
+    }
 }
 
 // UIPickerView - DataSource
@@ -166,15 +176,8 @@
         case 1:
             NSLog(@"Comics name: %@", ((Summary *)self.comicsItems[row]).name);
             NSLog(@"Comics uri: %@", ((Summary *)self.comicsItems[row]).resourceURI);
-            
-            NSArray *tasks = [self.manager tasks];
-            for (NSURLSessionDownloadTask *task in tasks) {
-                NSLog(@"Task %@ cancelled.", task.description);
-                [task cancel];
-            }
-            NSLog(@"Count of characters: %li", self.characters.count);
-            //ComicsViewController *comicsViewController = [[ComicsViewController alloc] initWithComicsURL:((Summary *)self.comicsItems[row]).resourceURI];
-            //[self.navigationController pushViewController:comicsViewController animated:true];
+            ComicsViewController *comicsViewController = [[ComicsViewController alloc] initWithComicsURL:((Summary *)self.comicsItems[row]).resourceURI];
+            [self.navigationController pushViewController:comicsViewController animated:true];
             break;
     }
 }

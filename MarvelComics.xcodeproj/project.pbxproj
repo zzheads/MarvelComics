@@ -25,6 +25,8 @@
 		A65A678E1E0D65C900BA91F2 /* Url.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A678D1E0D65C900BA91F2 /* Url.m */; };
 		A65A67921E0D666900BA91F2 /* ComicDate.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67911E0D666900BA91F2 /* ComicDate.m */; };
 		A65A67961E0D66D100BA91F2 /* ComicPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67951E0D66D100BA91F2 /* ComicPrice.m */; };
+		A65A679A1E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A67991E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.m */; };
+		A65A679E1E0FB4FE00BA91F2 /* Endpoint.m in Sources */ = {isa = PBXBuildFile; fileRef = A65A679D1E0FB4FE00BA91F2 /* Endpoint.m */; };
 		A6DEDEA31E085037006B0F5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA21E085037006B0F5D /* main.m */; };
 		A6DEDEA61E085037006B0F5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA51E085037006B0F5D /* AppDelegate.m */; };
 		A6DEDEA91E085037006B0F5D /* CharacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEA81E085037006B0F5D /* CharacterViewController.m */; };
@@ -81,6 +83,10 @@
 		A65A67911E0D666900BA91F2 /* ComicDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicDate.m; sourceTree = "<group>"; };
 		A65A67941E0D66D100BA91F2 /* ComicPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicPrice.h; sourceTree = "<group>"; };
 		A65A67951E0D66D100BA91F2 /* ComicPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicPrice.m; sourceTree = "<group>"; };
+		A65A67981E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPSessionManager+CancelAllTasks.h"; sourceTree = "<group>"; };
+		A65A67991E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPSessionManager+CancelAllTasks.m"; sourceTree = "<group>"; };
+		A65A679C1E0FB4FE00BA91F2 /* Endpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Endpoint.h; sourceTree = "<group>"; };
+		A65A679D1E0FB4FE00BA91F2 /* Endpoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Endpoint.m; sourceTree = "<group>"; };
 		A6DEDE9E1E085037006B0F5D /* MarvelComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DEDEA21E085037006B0F5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6DEDEA41E085037006B0F5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -126,6 +132,7 @@
 		A627230C1E0BB13A009BBFAB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A65A67971E0EC12300BA91F2 /* AFHTTPManager */,
 				A65A67831E0D52A200BA91F2 /* JsonArray */,
 				A62723501E0D0223009BBFAB /* Colors */,
 				A657173F1E09408300280C99 /* Signature */,
@@ -145,6 +152,7 @@
 		A627232D1E0BB6EC009BBFAB /* API */ = {
 			isa = PBXGroup;
 			children = (
+				A65A679B1E0FB4E500BA91F2 /* Endpoint */,
 				A627232E1E0BB701009BBFAB /* APIClient.h */,
 				A627232F1E0BB701009BBFAB /* APIClient.m */,
 				A62723311E0BB765009BBFAB /* ResourceType.h */,
@@ -276,6 +284,24 @@
 			name = ComicPrice;
 			sourceTree = "<group>";
 		};
+		A65A67971E0EC12300BA91F2 /* AFHTTPManager */ = {
+			isa = PBXGroup;
+			children = (
+				A65A67981E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.h */,
+				A65A67991E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.m */,
+			);
+			name = AFHTTPManager;
+			sourceTree = "<group>";
+		};
+		A65A679B1E0FB4E500BA91F2 /* Endpoint */ = {
+			isa = PBXGroup;
+			children = (
+				A65A679C1E0FB4FE00BA91F2 /* Endpoint.h */,
+				A65A679D1E0FB4FE00BA91F2 /* Endpoint.m */,
+			);
+			name = Endpoint;
+			sourceTree = "<group>";
+		};
 		A6DEDE951E085037006B0F5D = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +421,7 @@
 				A65A678A1E0D650700BA91F2 /* TextObject.m in Sources */,
 				A627233A1E0BD019009BBFAB /* Image.m in Sources */,
 				A65A67961E0D66D100BA91F2 /* ComicPrice.m in Sources */,
+				A65A679E1E0FB4FE00BA91F2 /* Endpoint.m in Sources */,
 				A6DEDEA61E085037006B0F5D /* AppDelegate.m in Sources */,
 				A6DEDEE31E086A64006B0F5D /* MD5.m in Sources */,
 				A62723301E0BB701009BBFAB /* APIClient.m in Sources */,
@@ -403,6 +430,7 @@
 				A65A67821E0D4D4000BA91F2 /* Comic.m in Sources */,
 				A65A67861E0D52D400BA91F2 /* NSArray+ArrayFromJson.m in Sources */,
 				A6DEDEA31E085037006B0F5D /* main.m in Sources */,
+				A65A679A1E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.m in Sources */,
 				A62723451E0BE803009BBFAB /* Summary.m in Sources */,
 				A627230F1E0BB164009BBFAB /* Character.m in Sources */,
 				A65A678E1E0D65C900BA91F2 /* Url.m in Sources */,

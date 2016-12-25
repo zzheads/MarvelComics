@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "Image.h"
 #import "List.h"
+#import "ResourceType.h"
 
 @interface Character : NSObject
 
@@ -38,6 +39,6 @@
 @property (nonatomic, strong) List *series;
 
 -(id) initWithJson: (NSDictionary *) json;
-+(NSArray *) getCharacters: (NSArray *) jsonArray;
++(ParseFromJson)parser;
 
 @end

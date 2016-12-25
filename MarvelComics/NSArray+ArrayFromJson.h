@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef id (^ ParseFromJson)(NSDictionary *);
+#import "ResourceType.h"
 
 @interface NSArray (ArrayFromJson)
 

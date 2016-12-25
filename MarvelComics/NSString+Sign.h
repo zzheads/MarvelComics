@@ -12,5 +12,6 @@
 @interface NSString (Sign)
 
 -(NSString *) signWith:(char)appendingChar;
+-(NSString *) secureHTTP;
 
 @end
