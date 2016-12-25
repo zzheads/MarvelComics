@@ -46,7 +46,7 @@
     
     self.navigationItem.title = @"Marvel Comics";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:8 green:114 blue:160 alpha:1.0];
+    self.navigationController.navigationBar.tintColor = [UIColor light];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];    
     
     [self.view setBackgroundColor:[UIColor dark]];
@@ -63,7 +63,7 @@
                                               [self.image.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
                                               [self.image.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
                                               [self.image.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor],
-                                              //[self.image.heightAnchor constraintEqualToConstant:height/2]
+                                              [self.image.heightAnchor constraintEqualToConstant:height/2]
                                               ]];
 
     [self.view addSubview:self.progress];
@@ -102,23 +102,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"I'm back!");
+    NSLog(@"Resuming all tasks");
+    [super viewWillAppear:animated];
     [self.apiClient.manager resumeAllTasks];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"Suspending all tasks");
     [super viewWillDisappear:animated];
     [self.apiClient.manager suspendAllTasks];
-    
-    if ([self isMovingFromParentViewController])
-    {
-        NSLog(@"View controller was popped");
-    }
-    else
-    {
-        NSLog(@"New view controller was pushed");
-    }
 }
 
 // UIPickerView - DataSource
