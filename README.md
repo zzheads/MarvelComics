@@ -13,5 +13,5 @@ When you select one character you can see (in same pickerView) what comics are c
 When you select comic you can see Comic datails view.
 All views have image, connected with character/comics and short description.
 
-<img src="">
-<img src="">
+<img src="Снимок экрана 2016-12-26 в 19.39.35.png">
+<img src="Снимок экрана 2016-12-26 в 19.40.14.png">
