@@ -7,7 +7,7 @@
 2) Add functionality or utilize tools which are clearly above and beyond those listed in the project instructions, while still maintaining good code quality.
 
 ###About project:
-This application uses Marvel API (see terms of use).
+This application uses Marvel API (see [terms of use](https://developer.marvel.com/terms)).
 On first screen you can choose one of Marvel's characters (while they are downloading).
 When you select one character you can see (in same pickerView) what comics are connected with him.
 When you select comic you can see Comic datails view.
