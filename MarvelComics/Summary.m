@@ -22,13 +22,4 @@
     return self;
 }
 
-+(NSArray *) getSummaries: (NSArray *) jsonArray {
-    NSMutableArray *results = [[NSMutableArray alloc] init];
-    for (NSDictionary *jsonElement in jsonArray) {
-        Summary *summary = [[Summary alloc] initWithJson:jsonElement];
-        [results addObject:summary];
-    }
-    return results;
-}
-
 @end

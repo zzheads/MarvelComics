@@ -46,10 +46,10 @@
     
     [self.view addSubview:self.image];
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.image.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
-                                              [self.image.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
+                                              [self.image.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
                                               [self.image.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor],
-                                              [self.image.heightAnchor constraintEqualToConstant:height/2]
+                                              [self.image.widthAnchor constraintEqualToConstant:[Image boundsOf:[Image appImageSize]].size.width],
+                                              [self.image.heightAnchor constraintEqualToConstant:[Image boundsOf:[Image appImageSize]].size.height]
                                               ]];
         
     [self.view addSubview:self.descriptionLabel];
@@ -65,7 +65,7 @@
         if ((comic)&&(comic.count > 0)) {
             self.comic = comic[0];
             self.navigationItem.title = self.comic.title;
-            [self.image setImageWithURL:[NSURL URLWithString:self.comic.thumbnail.securedFileName] placeholderImage:[UIImage imageNamed:self.comic.title]];
+            [self.image setImageWithURL:[NSURL URLWithString:[self.comic.thumbnail securedFileName: [Image appImageSize]]] placeholderImage:[UIImage imageNamed:self.comic.title]];
             if ((self.comic.desc.class != NSNull.self)&&(self.comic.desc != nil)) {
                 [self.descriptionLabel setText:self.comic.desc];
             } else {

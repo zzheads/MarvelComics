@@ -19,6 +19,5 @@
 @property (nonatomic, strong) NSString *type;
 
 -(id) initWithJson: (NSDictionary *) json;
-+(NSArray *) getSummaries: (NSArray *) jsonArray;
 
 @end

@@ -27,6 +27,7 @@
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) Character *currentCharacter;
 @property (nonatomic, strong) NSArray *comicsItems;
+@property (nonatomic, strong) NSArray *letters;
 
 @end
 
