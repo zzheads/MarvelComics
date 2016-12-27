@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface ComicPrice : NSObject
+@interface ComicPrice : NSObject<JsonDecodable>
 
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic) float price;
-
-- (id) initWithJson:(NSDictionary *)json;
 
 @end

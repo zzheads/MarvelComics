@@ -20,6 +20,12 @@
     return self;
 }
 
++(ParseFromJson)parser {
+    return ^id(NSDictionary *json) {
+        return [[Image alloc] initWithJson:json];
+    };
+};
+
 -(NSString *)getImageSizeName:(ImageSize)imageSize {
     switch (imageSize) {
         case portrait_small: return @"portrait_small";

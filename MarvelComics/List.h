@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "NSArray+ArrayFromJson.h"
 #import "Summary.h"
+#import "JsonDecodable.h"
 
-@interface List : NSObject
+@interface List : NSObject<JsonDecodable>
 
 //available (int, optional): The number of total available issues in this list. Will always be greater than or equal to the "returned" value.,
 //returned (int, optional): The number of issues returned in this collection (up to 20).,
@@ -21,7 +22,5 @@
 @property (nonatomic) int returned;
 @property (nonatomic, strong) NSString *collectionURI;
 @property (nonatomic, strong) NSArray *items;
-
--(id) initWithJson: (NSDictionary *) json;
 
 @end

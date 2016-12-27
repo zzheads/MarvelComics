@@ -17,4 +17,10 @@
     return self;
 }
 
++(ParseFromJson)parser {
+    return ^id(NSDictionary *json) {
+        return [[Url alloc] initWithJson:json];
+    };
+};
+
 @end

@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "Data.h"
+#import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface ResponseDict : NSObject
+@interface ResponseDict : NSObject<JsonDecodable>
 
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) Data *data;
@@ -18,7 +20,5 @@
 @property (nonatomic, strong) NSString *attributionText;
 @property (nonatomic, strong) NSString *attributionHTML;
 @property (nonatomic, strong) NSString *etag;
-
--(id) initWithJson: (NSDictionary *) json;
 
 @end

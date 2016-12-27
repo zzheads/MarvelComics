@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface Summary : NSObject
+@interface Summary : NSObject<JsonDecodable>
 
 //resourceURI (string, optional): The path to the individual story resource.,
 //name (string, optional): The canonical name of the story.,
@@ -18,8 +19,5 @@
 @property (nonatomic, strong) NSString *resourceURI;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *type;
-
--(id) initWithJson: (NSDictionary *) json;
-+(ParseFromJson)parser;
 
 @end

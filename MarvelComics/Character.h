@@ -11,8 +11,9 @@
 #import "Image.h"
 #import "List.h"
 #import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface Character : NSObject
+@interface Character : NSObject<JsonDecodable>
 
 //id (int, optional): The unique ID of the character resource.,
 //name (string, optional): The name of the character.,
@@ -37,8 +38,5 @@
 @property (nonatomic, strong) List *stories;
 @property (nonatomic, strong) List *events;
 @property (nonatomic, strong) List *series;
-
--(id) initWithJson: (NSDictionary *) json;
-+(ParseFromJson)parser;
 
 @end

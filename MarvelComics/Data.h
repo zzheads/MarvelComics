@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface Data : NSObject
+@interface Data : NSObject<JsonDecodable>
 
 @property (nonatomic, strong) NSArray *results;
 @property (nonatomic) long offset;
 @property (nonatomic) long count;
 @property (nonatomic) long total;
 @property (nonatomic) long limit;
-
--(id) initWithJson: (NSDictionary *) json;
 
 @end

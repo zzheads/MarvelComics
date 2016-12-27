@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface ComicDate : NSObject
+@interface ComicDate : NSObject<JsonDecodable>
 
 //type (string, optional): A description of the date (e.g. onsale date, FOC date).,
 //date (Date, optional): The date.
 
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSDate *date;
-
-- (id) initWithJson:(NSDictionary *)json;
 
 @end

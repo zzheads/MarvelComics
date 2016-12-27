@@ -98,6 +98,7 @@
 		A6DEDEB21E085037006B0F5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6DEDEE11E086A42006B0F5D /* MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MD5.h; sourceTree = "<group>"; };
 		A6DEDEE21E086A64006B0F5D /* MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5.m; sourceTree = "<group>"; };
+		A6E97CBC1E125532005D06E3 /* JsonDecodable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonDecodable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +116,8 @@
 		A627230B1E0BB132009BBFAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A6E97CBC1E125532005D06E3 /* JsonDecodable.h */,
+				A62723311E0BB765009BBFAB /* ResourceType.h */,
 				A65A67931E0D66C100BA91F2 /* ComicPrice */,
 				A65A678F1E0D665A00BA91F2 /* ComicDate */,
 				A65A678B1E0D65BD00BA91F2 /* Url */,
@@ -155,7 +158,6 @@
 				A65A679B1E0FB4E500BA91F2 /* Endpoint */,
 				A627232E1E0BB701009BBFAB /* APIClient.h */,
 				A627232F1E0BB701009BBFAB /* APIClient.m */,
-				A62723311E0BB765009BBFAB /* ResourceType.h */,
 			);
 			name = API;
 			sourceTree = "<group>";

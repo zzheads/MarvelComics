@@ -16,7 +16,7 @@
 #import "Image.h"
 #import "NSArray+ArrayFromJson.h"
 
-@interface Comic : NSObject
+@interface Comic : NSObject<JsonDecodable>
 
 //id (int, optional): The unique ID of the comic resource.,
 //digitalId (int, optional): The ID of the digital comic representation of this comic. Will be 0 if the comic is not available digitally.,
@@ -77,8 +77,5 @@
 @property (nonatomic, strong) List *characters;
 @property (nonatomic, strong) List *stories;
 @property (nonatomic, strong) List *events;
-
-- (id) initWithJson:(NSDictionary *)json;
-+(ParseFromJson)parser;
 
 @end

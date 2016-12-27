@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResourceType.h"
+#import "JsonDecodable.h"
 
-@interface TextObject : NSObject
+@interface TextObject : NSObject<JsonDecodable>
 
 //type (string, optional): The canonical type of the text object (e.g. solicit text, preview text, etc.).,
 //language (string, optional): The IETF language tag denoting the language the text object is written in.,
@@ -17,7 +19,5 @@
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *language;
 @property (nonatomic, strong) NSString *text;
-
-- (id) initWithJson:(NSDictionary *)json;
 
 @end

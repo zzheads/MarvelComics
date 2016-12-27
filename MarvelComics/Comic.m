@@ -43,25 +43,6 @@
 - (id) initWithJson:(NSDictionary *)json {
     self = [super init];
     
-    ParseFromJson summaryParse = ^id(NSDictionary *json) {
-        return [[Summary alloc] initWithJson:json];
-    };
-    ParseFromJson comicDateParse = ^id(NSDictionary *json) {
-        return [[ComicDate alloc] initWithJson:json];
-    };
-    ParseFromJson comicPriceParse = ^id(NSDictionary *json) {
-        return [[ComicPrice alloc] initWithJson:json];
-    };
-    ParseFromJson urlParse = ^id(NSDictionary *json) {
-        return [[Url alloc] initWithJson:json];
-    };
-    ParseFromJson textObjectParse = ^id(NSDictionary *json) {
-        return [[TextObject alloc] initWithJson:json];
-    };
-    ParseFromJson imageParse = ^id(NSDictionary *json) {
-        return [[Image alloc] initWithJson:json];
-    };
-    
     self.id = [json[@"id"] intValue];
     self.digitalId = [json[@"digitalId"] intValue];
     self.title = json[@"title"];
@@ -76,17 +57,17 @@
     self.issn = json[@"issn"];
     self.format = json[@"format"];
     self.pageCount = [json[@"pageCount"] intValue];
-    self.textObjects = [NSArray arrayFromJson:json[@"textObjects"] :textObjectParse];
+    self.textObjects = [NSArray arrayFromJson:json[@"textObjects"] :[TextObject parser]];
     self.resourceURI = json[@"resourceURI"];
-    self.urls = [NSArray arrayFromJson:json[@"urls"] :urlParse];
+    self.urls = [NSArray arrayFromJson:json[@"urls"] :[Url parser]];
     self.series = [[Summary alloc] initWithJson:json[@"series"]];
-    self.variants = [NSArray arrayFromJson:json[@"variants"] :summaryParse];
-    self.collections = [NSArray arrayFromJson:json[@"collections"] :summaryParse];
-    self.collectedIssues = [NSArray arrayFromJson:json[@"collectedIssues"] :summaryParse];
-    self.dates = [NSArray arrayFromJson:json[@"dates"] :comicDateParse];
-    self.prices = [NSArray arrayFromJson:json[@"prices"] :comicPriceParse];
+    self.variants = [NSArray arrayFromJson:json[@"variants"] :[Summary parser]];
+    self.collections = [NSArray arrayFromJson:json[@"collections"] :[Summary parser]];
+    self.collectedIssues = [NSArray arrayFromJson:json[@"collectedIssues"] :[Summary parser]];
+    self.dates = [NSArray arrayFromJson:json[@"dates"] :[ComicDate parser]];
+    self.prices = [NSArray arrayFromJson:json[@"prices"] :[ComicPrice parser]];
     self.thumbnail = [[Image alloc] initWithJson: json[@"thumbnail"]];
-    self.images = [NSArray arrayFromJson:json[@"images"] :imageParse];
+    self.images = [NSArray arrayFromJson:json[@"images"] :[Image parser]];
     self.creators = [[List alloc] initWithJson:json[@"creators"]];
     self.characters = [[List alloc] initWithJson:json[@"characters"]];
     self.stories = [[List alloc] initWithJson:json[@"stories"]];

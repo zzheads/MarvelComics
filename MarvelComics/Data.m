@@ -20,4 +20,10 @@
     return self;
 }
 
++(ParseFromJson)parser {
+    return ^id(NSDictionary *json) {
+        return [[Data alloc] initWithJson:json];
+    };
+}
+
 @end
