@@ -16,7 +16,7 @@
 #import "Character.h"
 #import "PageView.h"
 
-@interface ResourceViewController : UIViewController
+@interface ResourceViewController : UIViewController<UIScrollViewDelegate>
 
 - (id) initWithCharacter:(Character *)character :(ResourceType)resourceType;
 

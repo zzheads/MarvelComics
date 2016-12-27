@@ -8,7 +8,7 @@
 
 #import "ResourceViewController.h"
 
-@interface ResourceViewController ()
+@interface ResourceViewController () 
 
 @property (nonatomic, strong) Character *character;
 @property (nonatomic) ResourceType resourceType;
@@ -16,6 +16,8 @@
 @property (nonatomic, strong) APIClient *apiClient;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic) long countItems;
 
 @end
 
@@ -30,6 +32,8 @@
     
     self.pageControl = [[UIPageControl alloc] init];
     self.pageControl.translatesAutoresizingMaskIntoConstraints = false;
+    self.pageControl.pageIndicatorTintColor = [UIColor light];
+    self.pageControl.currentPageIndicatorTintColor = [UIColor lighten];
     
     self.apiClient = [[APIClient alloc] init];
     self.character = character;
@@ -67,16 +71,19 @@
     
     [self.view addSubview:self.pageControl];
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.pageControl.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                                              [self.pageControl.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
+                                              [self.pageControl.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
                                               [self.pageControl.centerYAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor constant:height*9/10],
                                               ]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     FinalPartialCompletionHandler finalHandler = ^void(NSArray *resArray) {
+        self.countItems = resArray.count;
+        self.pageControl.numberOfPages = resArray.count;
         [self setupScrollViewWithStories:resArray];
     };
-    
+    self.scrollView.delegate = self;
     [self.apiClient fetchPages:CharacterComics offset:0 limit:20 total:100 resourceId:self.character.id parser:[Comic parser] progress:nil partialCompletion:nil finalCompletion:finalHandler];
 }
 
@@ -97,6 +104,11 @@
         totalWidth += pageView.bounds.size.width;
     }
     [self.scrollView setContentSize:CGSizeMake(totalWidth, height)];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    int pageWidth = self.scrollView.contentSize.width / self.countItems;
+    self.pageControl.currentPage = self.scrollView.contentOffset.x / pageWidth;
 }
 
 @end
