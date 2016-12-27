@@ -33,6 +33,10 @@
 		A6DEDEAE1E085037006B0F5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6DEDEAD1E085037006B0F5D /* Assets.xcassets */; };
 		A6DEDEB11E085037006B0F5D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6DEDEAF1E085037006B0F5D /* LaunchScreen.storyboard */; };
 		A6DEDEE31E086A64006B0F5D /* MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEDEE21E086A64006B0F5D /* MD5.m */; };
+		A6E97CE41E1280CC005D06E3 /* ResourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E97CE31E1280CC005D06E3 /* ResourceViewController.m */; };
+		A6E97CE91E128569005D06E3 /* PageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E97CE81E128569005D06E3 /* PageView.m */; };
+		A6E97CEE1E128D71005D06E3 /* AbstractStory.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E97CED1E128D71005D06E3 /* AbstractStory.m */; };
+		A6E97CF01E12A090005D06E3 /* PageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6E97CEF1E12A090005D06E3 /* PageView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -99,6 +103,13 @@
 		A6DEDEE11E086A42006B0F5D /* MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MD5.h; sourceTree = "<group>"; };
 		A6DEDEE21E086A64006B0F5D /* MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5.m; sourceTree = "<group>"; };
 		A6E97CBC1E125532005D06E3 /* JsonDecodable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonDecodable.h; sourceTree = "<group>"; };
+		A6E97CE21E1280CC005D06E3 /* ResourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceViewController.h; sourceTree = "<group>"; };
+		A6E97CE31E1280CC005D06E3 /* ResourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceViewController.m; sourceTree = "<group>"; };
+		A6E97CE71E128569005D06E3 /* PageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageView.h; sourceTree = "<group>"; };
+		A6E97CE81E128569005D06E3 /* PageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageView.m; sourceTree = "<group>"; };
+		A6E97CEC1E128D71005D06E3 /* AbstractStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractStory.h; sourceTree = "<group>"; };
+		A6E97CED1E128D71005D06E3 /* AbstractStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractStory.m; sourceTree = "<group>"; };
+		A6E97CEF1E12A090005D06E3 /* PageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +127,7 @@
 		A627230B1E0BB132009BBFAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A6E97CEB1E128D10005D06E3 /* AbstractStory */,
 				A6E97CBC1E125532005D06E3 /* JsonDecodable.h */,
 				A62723311E0BB765009BBFAB /* ResourceType.h */,
 				A65A67931E0D66C100BA91F2 /* ComicPrice */,
@@ -228,6 +240,10 @@
 				A6DEDEA81E085037006B0F5D /* CharacterViewController.m */,
 				A65A67791E0D491300BA91F2 /* ComicsViewController.h */,
 				A65A677A1E0D491300BA91F2 /* ComicsViewController.m */,
+				A6E97CE21E1280CC005D06E3 /* ResourceViewController.h */,
+				A6E97CE31E1280CC005D06E3 /* ResourceViewController.m */,
+				A6E97CE71E128569005D06E3 /* PageView.h */,
+				A6E97CE81E128569005D06E3 /* PageView.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -341,8 +357,18 @@
 				A6DEDEA41E085037006B0F5D /* AppDelegate.h */,
 				A6DEDEA51E085037006B0F5D /* AppDelegate.m */,
 				A6DEDEA21E085037006B0F5D /* main.m */,
+				A6E97CEF1E12A090005D06E3 /* PageView.xib */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6E97CEB1E128D10005D06E3 /* AbstractStory */ = {
+			isa = PBXGroup;
+			children = (
+				A6E97CEC1E128D71005D06E3 /* AbstractStory.h */,
+				A6E97CED1E128D71005D06E3 /* AbstractStory.m */,
+			);
+			name = AbstractStory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,6 +431,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6E97CF01E12A090005D06E3 /* PageView.xib in Resources */,
 				A6DEDEB11E085037006B0F5D /* LaunchScreen.storyboard in Resources */,
 				A6DEDEAE1E085037006B0F5D /* Assets.xcassets in Resources */,
 			);
@@ -430,6 +457,9 @@
 				A627233E1E0BDD2A009BBFAB /* ResponseDict.m in Sources */,
 				A65A67771E0D0EA000BA91F2 /* UIColor+AppColor.m in Sources */,
 				A65A67821E0D4D4000BA91F2 /* Comic.m in Sources */,
+				A6E97CE91E128569005D06E3 /* PageView.m in Sources */,
+				A6E97CE41E1280CC005D06E3 /* ResourceViewController.m in Sources */,
+				A6E97CEE1E128D71005D06E3 /* AbstractStory.m in Sources */,
 				A65A67861E0D52D400BA91F2 /* NSArray+ArrayFromJson.m in Sources */,
 				A6DEDEA31E085037006B0F5D /* main.m in Sources */,
 				A65A679A1E0EC16F00BA91F2 /* AFHTTPSessionManager+CancelAllTasks.m in Sources */,

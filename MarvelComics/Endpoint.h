@@ -20,7 +20,7 @@
 @property (nonatomic) long resourceId;
 @property (nonatomic, strong) NSString *urlString;
 
-- (id) initWithResourceType:(ResourceType)resourceType :(long)offset :(long)limit :(long)total :(long)resourceId;
+- (id) initWithResourceType:(ResourceType)resourceType offset:(long)offset limit:(long)limit total:(long)total resourceId:(long)resourceId;
 - (id) initWithURLString:(NSString *)urlString;
 - (NSURL *)url;
 -(NSString *)resourceName;

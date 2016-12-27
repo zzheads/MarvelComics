@@ -94,9 +94,10 @@
     }
 }
 
--(NSString *) securedFileName:(ImageSize)imageSize {
+-(NSURL *) securedFileName:(ImageSize)imageSize {
     NSString *secured = [self.path stringByReplacingOccurrencesOfString:@"http" withString:@"https"];
-    return [[NSString alloc] initWithFormat:@"%@/%@.%@", secured, [self getImageSizeName: imageSize], self.extension];
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@/%@.%@", secured, [self getImageSizeName: imageSize], self.extension];
+    return [NSURL URLWithString:urlString];
 }
 
 +(ImageSize) appImageSize {

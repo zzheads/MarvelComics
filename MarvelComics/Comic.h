@@ -15,8 +15,9 @@
 #import "List.h"
 #import "Image.h"
 #import "NSArray+ArrayFromJson.h"
+#import "AbstractStory.h"
 
-@interface Comic : NSObject<JsonDecodable>
+@interface Comic : AbstractStory<JsonDecodable>
 
 //id (int, optional): The unique ID of the comic resource.,
 //digitalId (int, optional): The ID of the digital comic representation of this comic. Will be 0 if the comic is not available digitally.,
@@ -50,10 +51,10 @@
 
 @property (nonatomic) int id;
 @property (nonatomic) int digitalId;
-@property (nonatomic, strong) NSString *title;
+//@property (nonatomic, strong) NSString *title;
 @property (nonatomic) double issueNumber;
 @property (nonatomic, strong) NSString *variantDescription;
-@property (nonatomic, strong) NSString *desc;
+//@property (nonatomic, strong) NSString *desc;
 @property (nonatomic, strong) NSDate *modified;
 @property (nonatomic, strong) NSString *isbn;
 @property (nonatomic, strong) NSString *upc;
@@ -71,7 +72,7 @@
 @property (nonatomic, strong) NSArray *collectedIssues;
 @property (nonatomic, strong) NSArray *dates;
 @property (nonatomic, strong) NSArray *prices;
-@property (nonatomic, strong) Image *thumbnail;
+//@property (nonatomic, strong) Image *thumbnail;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, strong) List *creators;
 @property (nonatomic, strong) List *characters;

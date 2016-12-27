@@ -65,7 +65,7 @@
         if ((comic)&&(comic.count > 0)) {
             self.comic = comic[0];
             self.navigationItem.title = self.comic.title;
-            [self.image setImageWithURL:[NSURL URLWithString:[self.comic.thumbnail securedFileName: [Image appImageSize]]] placeholderImage:[UIImage imageNamed:self.comic.title]];
+            [self.image setImageWithURL:[self.comic.thumbnail securedFileName: [Image appImageSize]]];
             if ((self.comic.desc.class != NSNull.self)&&(self.comic.desc != nil)) {
                 [self.descriptionLabel setText:self.comic.desc];
             } else {
@@ -83,15 +83,5 @@
     [super didReceiveMemoryWarning];
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

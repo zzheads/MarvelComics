@@ -100,7 +100,7 @@
         [self.progress setHidden:true];
     };
 
-    [self.apiClient fetchPages:Characters :[Character parser] :setProgress :partialHandler :finalHandler];
+    [self.apiClient fetchPages:Characters offset:0 limit:100 total:10000 resourceId:0 parser:[Character parser] progress:setProgress partialCompletion:partialHandler finalCompletion:finalHandler];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -200,15 +200,13 @@
             }
             self.navigationItem.title = self.currentCharacter.name;
             self.descriptionLabel.text = self.currentCharacter.desc;
-            [self.image setImageWithURL:[NSURL URLWithString:[self.currentCharacter.thumbnail securedFileName:[Image appImageSize]]] placeholderImage:[UIImage imageNamed:self.currentCharacter.name]];
+            [self.image setImageWithURL:[self.currentCharacter.thumbnail securedFileName:[Image appImageSize]]];
             [pickerView reloadComponent:2];
             break;
             
         case 2:
-            NSLog(@"Comics name: %@", ((Summary *)self.comicsItems[row]).name);
-            NSLog(@"Comics uri: %@", ((Summary *)self.comicsItems[row]).resourceURI);
-            ComicsViewController *comicsViewController = [[ComicsViewController alloc] initWithComicsURL:((Summary *)self.comicsItems[row]).resourceURI];
-            [self.navigationController pushViewController:comicsViewController animated:true];
+            ;ResourceViewController *viewController = [[ResourceViewController alloc] initWithCharacter:self.currentCharacter :CharacterComics];
+            [self.navigationController pushViewController:viewController animated:true];
             break;
             
     }

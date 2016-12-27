@@ -15,6 +15,7 @@
 #import "ComicsViewController.h"
 #import "AFNetworking/UIImageView+AFNetworking.h"
 #import "AFNetworking/AFNetworking.h"
+#import "ResourceViewController.h"
 
 @interface CharacterViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 

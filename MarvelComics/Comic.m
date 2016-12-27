@@ -40,6 +40,8 @@
 //stories (StoryList, optional): A resource list containing the stories which appear in this comic.,
 //events (EventList, optional): A resource list containing the events in which this comic appears.
 
+@dynamic title, desc, thumbnail;
+
 - (id) initWithJson:(NSDictionary *)json {
     self = [super init];
     

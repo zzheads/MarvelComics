@@ -60,7 +60,7 @@ typedef enum ImageSize {
 @property (nonatomic, strong) NSString *extension;
 
 +(CGRect)boundsOf:(ImageSize)imageSize;
--(NSString *) securedFileName:(ImageSize)imageSize;
+-(NSURL *) securedFileName:(ImageSize)imageSize;
 +(ImageSize) appImageSize;
 
 @end

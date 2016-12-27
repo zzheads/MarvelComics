@@ -10,7 +10,7 @@
 
 @implementation Endpoint
 
-- (id) initWithResourceType:(ResourceType)resourceType :(long)offset :(long)limit :(long)total :(long)resourceId {
+- (id) initWithResourceType:(ResourceType)resourceType offset:(long)offset limit:(long)limit total:(long)total resourceId:(long)resourceId {
     self = [super init];
     self.baseURL = @"https://gateway.marvel.com";
     self.resourceType = resourceType;
@@ -35,6 +35,18 @@
         case Characters:
             urlString = @"/v1/public/characters";
             break;
+        case CharacterComics:
+            urlString = [NSString stringWithFormat:@"/v1/public/characters/%li/comics", self.resourceId];
+            break;
+        case CharacterEvents:
+            urlString = [NSString stringWithFormat:@"/v1/public/characters/%li/events", self.resourceId];
+            break;
+        case CharacterStories:
+            urlString = [NSString stringWithFormat:@"/v1/public/characters/%li/stories", self.resourceId];
+            break;
+        case CharacterSeries:
+            urlString = [NSString stringWithFormat:@"/v1/public/characters/%li/series", self.resourceId];
+            break;
         case Comics:
             urlString = @"/v1/public/comics";
             break;
@@ -51,6 +63,10 @@
 -(NSString *)resourceName {
     switch (self.resourceType) {
         case Characters: return @"Characters";
+        case CharacterSeries: return @"Series of character";
+        case CharacterComics: return @"Comics of character";
+        case CharacterStories: return @"Stories of character";
+        case CharacterEvents: return @"Events of character";
         case Comics: return @"Comics";
         case ResourceURL: return @"Resource URL";
     }

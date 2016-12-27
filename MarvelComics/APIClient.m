@@ -30,7 +30,7 @@
 }
 
 -(void) fetchResource:(ResourceType)resourceType :(ParseFromJson)parser :(CompletionSuccess)completionSuccess :(CompletionError)completionError {
-    self.endpoint = [[Endpoint alloc] initWithResourceType:resourceType :0 :0 :0 :0];
+    self.endpoint = [[Endpoint alloc] initWithResourceType:resourceType offset:0 limit:0 total:0 resourceId:0];
     NSURL *url = [self.endpoint url];
     [self.manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
@@ -42,30 +42,38 @@
 }
 
 -(void) listPage:(NSMutableArray *)results :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
-        if (results.count == self.endpoint.total) {
+    if (results.count == self.endpoint.total) {
+        if (finalCompletion) {
             finalCompletion(results);
-            return;
-        } else {
-            NSURL *url = [self.endpoint url];
-            NSLog(@"Fetching page (%@). Offset: %li Count: %lu", self.endpoint.resourceName, self.endpoint.offset, (unsigned long)results.count);
-            [self.manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
+        }
+        return;
+    } else {
+        NSURL *url = [self.endpoint url];
+        NSLog(@"Fetching page (%@). Offset: %li Count: %lu", self.endpoint.resourceName, self.endpoint.offset, (unsigned long)results.count);
+        [self.manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            ResponseDict *responseDict = [[ResponseDict alloc] initWithJson:responseObject];
+            if (self.endpoint.total > responseDict.data.total) {
                 self.endpoint.total = responseDict.data.total;
-                NSArray *arrayOfResource = [NSArray arrayFromJson:responseDict.data.results :parser];
-                [results addObjectsFromArray:arrayOfResource];
+            }
+            NSArray *arrayOfResource = [NSArray arrayFromJson:responseDict.data.results :parser];
+            [results addObjectsFromArray:arrayOfResource];
+            if (partialCompletion) {
                 partialCompletion(arrayOfResource);
+            }
+            if (setProgress) {
                 float progress = (float)results.count / (float)self.endpoint.total;
                 setProgress(progress);
-                self.endpoint.offset += arrayOfResource.count;
-                [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                NSLog(@"Error: %@", error);
-            }];
-        }
+            }
+            self.endpoint.offset += arrayOfResource.count;
+            [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"Error: %@", error);
+        }];
+    }
 }
 
--(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion {
-    self.endpoint = [[Endpoint alloc] initWithResourceType:resourceType :0 :100 :10000 :0];
+-(void) fetchPages:(ResourceType)resourceType offset:(long)offset limit:(long)limit total:(long)total resourceId:(long)resourceId parser:(ParseFromJson)parser progress:(ProgressDelegate)setProgress partialCompletion:(PartialCompletionHandler)partialCompletion finalCompletion:(FinalPartialCompletionHandler)finalCompletion {
+    self.endpoint = [[Endpoint alloc] initWithResourceType:resourceType offset:offset limit:limit total:total resourceId:resourceId];
     NSMutableArray *results = [[NSMutableArray alloc] init];
     [self listPage:results :parser :setProgress :partialCompletion :finalCompletion];
 }

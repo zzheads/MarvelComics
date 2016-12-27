@@ -10,6 +10,10 @@
 
 typedef enum ResourceType {
     Characters,
+    CharacterComics,
+    CharacterEvents,
+    CharacterStories,
+    CharacterSeries,
     Comics,
     ResourceURL
 } ResourceType;

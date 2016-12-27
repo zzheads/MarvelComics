@@ -21,7 +21,5 @@
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 
 - (void) fetchURL:(NSString *)urlString :(ParseFromJson)parse :(CompletionSuccess)completionSuccess :(CompletionError)completionError;
--(void) fetchResource:(ResourceType)resourceType :(ParseFromJson)parser :(CompletionSuccess)completionSuccess :(CompletionError)completionError;
--(void) fetchPages:(ResourceType)resourceType :(ParseFromJson)parser :(ProgressDelegate)setProgress :(PartialCompletionHandler)partialCompletion :(FinalPartialCompletionHandler)finalCompletion;
-
+-(void) fetchPages:(ResourceType)resourceType offset:(long)offset limit:(long)limit total:(long)total resourceId:(long)resourceId parser:(ParseFromJson)parser progress:(ProgressDelegate)setProgress partialCompletion:(PartialCompletionHandler)partialCompletion finalCompletion:(FinalPartialCompletionHandler)finalCompletion;
 @end
