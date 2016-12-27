@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSArray+ArrayFromJson.h"
 #import "Summary.h"
 
 @interface List : NSObject

@@ -17,11 +17,7 @@
 - (id) init {
     self = [super init];
     self.letters = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"W",@"X",@"Y",@"Z"];
-    return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+    
     self.characters = [[NSMutableArray alloc] init];
     self.comicsItems = [[NSArray alloc] init];
     self.apiClient = [[APIClient alloc] init];
@@ -46,7 +42,13 @@
     self.descriptionLabel.numberOfLines = 0;
     self.descriptionLabel.textAlignment = NSTextAlignmentJustified;
     self.descriptionLabel.font = [UIFont systemFontOfSize:13];
-        
+
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
     float height = [UIScreen mainScreen].bounds.size.height;
     float width = [UIScreen mainScreen].bounds.size.width;
     
@@ -106,16 +108,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"Resuming all tasks");
-    [super viewWillAppear:animated];
+    NSLog(@"Resuming all tasks (if there are any)");
     [self.apiClient.manager resumeAllTasks];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"Suspending all tasks");
-    [super viewWillDisappear:animated];
+    NSLog(@"Suspending all tasks (if there are any)");
     [self.apiClient.manager suspendAllTasks];
+    [super viewWillDisappear:animated];
 }
 
 // UIPickerView - DataSource
@@ -184,15 +186,21 @@
                     Character *character = self.characters[i];
                     if ([character.name hasPrefix:self.letters[row]]) {
                         [pickerView selectRow:i inComponent:1 animated:true];
-                        [self selectCharacter:i];
-                        [pickerView reloadComponent:2];
+                        [self pickerView:self.picker didSelectRow:i inComponent:1];
+                        break;
                     }
                 }
             }
             break;
             
         case 1:
-            [self selectCharacter:row];
+            self.currentCharacter = self.characters[row];
+            if (self.currentCharacter.comics != nil) {
+                self.comicsItems = self.currentCharacter.comics.items;
+            }
+            self.navigationItem.title = self.currentCharacter.name;
+            self.descriptionLabel.text = self.currentCharacter.desc;
+            [self.image setImageWithURL:[NSURL URLWithString:[self.currentCharacter.thumbnail securedFileName:[Image appImageSize]]] placeholderImage:[UIImage imageNamed:self.currentCharacter.name]];
             [pickerView reloadComponent:2];
             break;
             
@@ -204,16 +212,6 @@
             break;
             
     }
-}
-
-- (void)selectCharacter:(long)number {
-    self.currentCharacter = self.characters[number];
-    if (self.currentCharacter.comics != nil) {
-        self.comicsItems = self.currentCharacter.comics.items;
-    }
-    self.navigationItem.title = self.currentCharacter.name;
-    self.descriptionLabel.text = self.currentCharacter.desc;
-    [self.image setImageWithURL:[NSURL URLWithString:[self.currentCharacter.thumbnail securedFileName:[Image appImageSize]]] placeholderImage:[UIImage imageNamed:self.currentCharacter.name]];
 }
 
 @end

@@ -20,7 +20,7 @@
     self.available = [json[@"available"] intValue];
     self.returned = [json[@"returned"] intValue];
     self.collectionURI = json[@"collectionURI"];
-    self.items = [[NSArray alloc] initWithArray: [Summary getSummaries:json[@"items"]]];
+    self.items = [NSArray arrayFromJson:json[@"items"] :[Summary parser]];
     return self;
 }
 

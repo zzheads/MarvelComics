@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResourceType.h"
 
 @interface Summary : NSObject
 
@@ -19,5 +20,6 @@
 @property (nonatomic, strong) NSString *type;
 
 -(id) initWithJson: (NSDictionary *) json;
++(ParseFromJson)parser;
 
 @end
